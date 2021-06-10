@@ -1,0 +1,28 @@
+import sys
+N, K = map(int, input().split(' '))
+lst = []
+PH = input().strip()
+for i in PH:
+        lst.append(i)
+
+idx = 0
+cnt = 0
+
+for i in range(N):
+        if lst[i] == "P":
+                for j in range(i - K, i + K+1):
+                        if j < 0:
+                                idx = 0
+                        elif j >= N:
+                                idx = N - 1
+                        else:
+                                idx = j
+
+                        if lst[idx] == "H":
+ 
+                                lst[idx] = "A"
+                                cnt += 1
+                                break
+
+
+print(cnt)
