@@ -1,0 +1,9 @@
+import sys
+P, N = map(int, input().split(' '))
+lst = list(map(int, (sys.stdin.readline().strip().split(' '))))
+
+cur_num= 0
+for i in range(N):
+        cur_num = (cur_num * P) %1000000007
+        cur_num = (lst[i]+ cur_num) %1000000007
+print(cur_num%1000000007)
