@@ -1,0 +1,23 @@
+import sys
+W, N = map(int, input().split(' '))
+arr = []
+for i in range(N):
+        material = list(map(int,sys.stdin.readline().strip().split(' ')))
+        arr.append(material)
+sort_arr=sorted(arr, key=lambda x:x[1],reverse = True)
+
+
+remain = W
+idx = 0
+answer = 0
+while remain > 0:
+        if remain > sort_arr[idx][0]:
+                answer = answer + sort_arr[idx][0] * sort_arr[idx][1]
+                remain -= sort_arr[idx][0]
+        else:
+                answer = answer + remain * sort_arr[idx][1]
+                remain = 0
+        idx += 1
+        if idx == N:
+                break
+print(answer)
