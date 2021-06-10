@@ -1,0 +1,23 @@
+import sys
+N, M = map(int, input().split(' '))
+W_list = list(map(int, sys.stdin.readline().strip().split(' ')))
+relationship = []
+for i in range(N):
+        relationship.append([])
+
+for i in range(M):
+        person1, person2 = map(int, input().split(' '))
+        relationship[person1- 1].append(person2)
+        relationship[person2- 1].append(person1)
+
+answer = 0
+for i in range(N):
+        if_big = True
+
+        for j in relationship[i]:
+                if W_list[i] <= W_list[j-1]:
+                        if_big = False
+                        break
+        if if_big == True:
+                answer +=1
+print(answer)
