@@ -1,0 +1,11 @@
+import sys
+N, K = map(int, input().split(' '))
+score = list(map(int, sys.stdin.readline().strip().split(' ')))
+for i in range(K):
+        start, last = map(int, input().split(' '))
+        summation = 0
+        num = 0
+        for i in range(start - 1, last):
+                summation += score[i]
+                num += 1
+        print("{:.2f}".format(summation/num))
