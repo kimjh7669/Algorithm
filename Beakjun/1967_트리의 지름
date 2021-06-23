@@ -1,21 +1,44 @@
 import sys
 N = int(input())
+for_break = N
 graph = []
-leaf = [1] * N
-real_graph = []
-for i in range(N):
-        real_graph.append([])
+visit = [1] * N
+parent_graph = []
+child_graph= []
+temp = []
+sum2leaves = [0] * N
+maxleaf = [0] * N
 
+for i in range(N):
+        child_graph.append([])
+        parent_graph.append([])
+        temp.append([])
 
 for i in range(N - 1):
         graph.append(list(map(int, sys.stdin.readline().strip().split(' '))))
-        real_graph[graph[i][0] - 1].append(graph[i][1])
-        leaf[graph[i][0] - 1] = 0
-print(real_graph)
+        parent_graph[graph[i][0] - 1].append(graph[i][1])
+        child_graph[graph[i][1] - 1].append(graph[i][0])
+        child_graph[graph[i][1] - 1].append(graph[i][2])
 
+        visit[graph[i][0] - 1] = 0
+for_break = visit.count(0)
 
-print(graph)
+while for_break != 0:
+        i = visit.index(1)
+        visit[i] = 2
+        
+        idx = child_graph[i][0]- 1
+        temp[idx].append(maxleaf[i] + child_graph[i][1])
+        parent_graph[idx].pop(0)
+        if len(parent_graph[idx]) == 0:
+                visit[idx] = 1
+                for_break -= 1
+                sort_temp = sorted(temp[idx], reverse = True)
+                maxleaf[idx] = sort_temp[0]
+                if len(sort_temp) > 1:
+                        sum2leaves[idx] = sort_temp[0] + sort_temp[1]
+                else:
+                        sum2leaves[idx] = sort_temp[0]
+                        
 
-
-하나의 노드는 자식 노드의 합과, 자식 노드 들중 가장 큰 값을 원소로 갖는다.
-가장 부모노드 까지 구한 후 max값을 반환한다
+print(max(sum2leaves))
