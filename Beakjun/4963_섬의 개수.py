@@ -1,5 +1,7 @@
 import sys
 from collections import deque
+sys.setrecursionlimit(10 ** 6)
+input = sys.stdin.readline
 
 w, h = map(int, input().split())
 
@@ -7,20 +9,13 @@ dx = [-1, -1, -1, 0, 0, 1, 1, 1]
 dy = [-1, 0, 1, -1, 1, -1, 0, 1]
 
 def dfs(i, j):
-        q = deque()
-        q.append([i,j])
         graph[i][j] = 0
-        while q:
-                a, b = q.popleft()
-                for k in range(8):
-                        x = a + dx[k]
-                        y = b + dy[k]
-                        if 0 <= x < h and 0 <= y < w and graph[x][y] == 1:
-                                graph[x][y] = 0
-                                q.append([x, y])
-                                
-                                
-
+        
+        for k in range(8):
+                x = i + dx[k]
+                y = j + dy[k]
+                if 0 <= x < h and 0 <= y < w and graph[x][y] == 1:
+                        dfs(x,y)
                         
 
 
