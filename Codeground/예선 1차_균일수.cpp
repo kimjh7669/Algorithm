@@ -8,6 +8,7 @@ int Answer;
 int N, b;
 int temp;
 int temp1, temp2;
+
 bool out;
 bool is_answer;
 
@@ -20,6 +21,7 @@ int main(int argc, char** argv)
                 cin >> N;
                 temp = N;
                 
+
                 b = 2;
 		Answer = 0;
                 is_answer = false;
@@ -31,7 +33,6 @@ int main(int argc, char** argv)
                         
                         while(N >= 1){
                                 temp2 = N % b;
-                                // cout << "temp1 : " << temp1 << "temp2 : " << temp2 << endl;
                                 N = N / b;
                                 if(temp1 != temp2 ){
                                         b += 1;
@@ -39,18 +40,18 @@ int main(int argc, char** argv)
                                         break;
                                 }
                         }
-                        // cout << "out: " << out << endl;
                         if(out == 1){
                                 is_answer = true;
                                 break;
                         }
                 }
-                if(is_answer == false){
+                if(N == 1 || N==2){
+                        Answer = 2;
+                }
+                else if(is_answer == false){
                         Answer = temp - 1;
                 }else{Answer = b;}
 
-
-		
 
 		cout << "Case #" << test_case+1 << endl;
 		cout << Answer << endl;
