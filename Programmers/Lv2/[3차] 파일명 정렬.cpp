@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <tuple>
 
-#define ssi pair<string,string,int>
+#define ssi tuple<string,string,int>
 #define pp pair<string,string>
 #define pi pair<string,int>
 using namespace std;
