@@ -22,15 +22,9 @@ int solution(vector<vector<int> > land)
             DP[i][j] = temp + land[i][j];
         }
     }
-    for(int i=0;i<land.size();i++){
-        for(int j=0;j<4;j++){
-            cout << DP[i][j] << ' ';
-        }
-        cout << endl;
-    }
     for(int i=0;i<4;i++){
         if(answer < DP[land.size() - 1][i])
             answer = DP[land.size() - 1][i];
-    }
+    } 
     return answer;
 }
