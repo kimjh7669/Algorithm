@@ -19,6 +19,15 @@ bool cmp_int(const pair<string,int>& a, const pair<string,int>& b) {
 	return a.second < b.second;
 }
 
+bool cmp_first(const tuple<string,string,int>& a, const tuple<string,string,int>& b) {
+	// if (a.second == b.second) return a.first < b.first;
+	return a.second < b.second;
+}
+bool cmp_second(const tuple<string,string,int>& a, const tuple<string,string,int>& b) {
+	// if (a.third == b.third) return a.first < b.first;
+	return a.third < b.third;
+}
+
 vector<string> solution(vector<string> files) {
     vector<string> answer;
     vector<tuple<string,stirng,int>> temp_vector;
@@ -64,7 +73,9 @@ vector<string> solution(vector<string> files) {
 	sort(vec.begin(), vec.end(), cmp_int);
     cout << "===================vec========================" <<endl;
     for(auto it:vec) cout << it.first << ' ' << it.second << endl;
-    
+    sort(temp_vector.begin(), temp_vector.end(), cmp_first);
+    sort(temp_vector.begin(), temp_vector.end(), cmp_second);
+    for(auto it:temp_vector) answer.push_back(it.first);
     return answer;
 }
 
