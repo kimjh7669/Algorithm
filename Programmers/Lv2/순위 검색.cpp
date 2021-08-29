@@ -1,87 +1,73 @@
-#include<iostream>
-#include<string>
-#include<vector>
-#include<sstream>
-#define TRIM_SPACE " \t\n\v"
+#include <string>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <map>
+#include <sstream>
+
 using namespace std;
 
-vector<string> split(string str, string delimiter);
-
-namespace ospace { 
-    inline string trim(string& s,const string& drop = TRIM_SPACE) {
-    string r=s.erase(s.find_last_not_of(drop)+1); 
-    return r.erase(0,r.find_first_not_of(drop)); 
-    }
-}
-using std::string; 
-using ospace::trim;
-
-vector <string> information[50001];
-
 vector<int> solution(vector<string> info, vector<string> query) {
-    vector<int> answer;
-    int people_num = info.size();
-    string lang = "";
-    string whatend = "";
-    string elder = "";
-    string score = "";
-    string food = "";
-    string temp = "";
-    int ans_temp = 0;
-    for(int i = 0 ; i < people_num; i++){
-        vector<string> for_info = split(info[i], " ");
-        information[i] = for_info;
-    }
-    cout << endl;
+    vector<int> answer(query.size(), 0);
+    map<string, vector<int>> m;
     
-    for(int i = 0 ; i < query.size(); i++){
-        ans_temp = 0;
-        temp = query[i];
-        vector<string> for_query = split(query[i], "and");
+    for(int i = 0; i < info.size(); i++){
+        string token;
+        stringstream ss(info[i]);
+        vector<vector<string>> str(4, vector<string>(2, "-"));
+        int index = 0, score = 0;
         
-        lang = trim(for_query[0]);
-        whatend = trim(for_query[1]);
-        elder = trim(for_query[2]);
-        temp = trim(for_query[3]);
-        vector<string> for_query1 = split(temp, " ");
-        food = trim(for_query1[0]);
-        score = trim(for_query1[1]);
-        
-        for(int j = 0 ; j < people_num ; j++){
-            if(lang != "-")
-                if(information[j][0] != lang) continue;
-            if(whatend != "-")
-                if(information[j][1] != whatend) continue;
-            if(elder != "-")
-                if(information[j][2] != elder) continue;
-            if(food != "-")
-                if(information[j][3] != food) continue;
-            if(score != "-")
-                if(stoi(information[j][4]) < stoi(score)) continue;
-            ans_temp++;
+        while(ss >> token){
+            if(index < 4){
+                str[index++][0] = token;    
+            }
+            else{
+                score = stoi(token);
+            }
         }
-        answer.push_back(ans_temp);
+        
+        for(int i = 0; i < 2; i++){
+            string t1, t2, t3, t4;
+            t1 = str[0][i];
+            for(int j = 0; j < 2; j++){
+                t2 = str[1][j];
+                for(int k = 0; k < 2; k++){
+                    t3 = str[2][k];
+                    for(int l = 0; l < 2; l++){
+                        t4 = str[3][l];
+                        m[t1 + t2 + t3 + t4].push_back(score);
+                    }
+                }
+            }
+        }
+    }
+    
+    for(auto itr = m.begin(); itr != m.end(); itr++){
+        sort(itr->second.begin(), itr->second.end());
+    }
+    
+    for(int i = 0; i < query.size(); i++){
+        string str = "", token;
+        stringstream ss(query[i]);
+        int index = 0, score = 0;
+        
+        while(ss >> token){
+            if(token == "and"){
+                continue;
+            }
+            
+            if(index++ < 4){
+                str += token;
+            }
+            else{
+                score = stoi(token);
+            }
+        }
+        
+        auto itr = lower_bound(m[str].begin(), m[str].end(), score);
+        
+        answer[i] = m[str].size() - (itr - m[str].begin());
     }
     
     return answer;
-}
-
-
-vector<string> split(std::string str, std::string delimiter) {
-    vector<string> ret; size_t pos = 0; std::string token; 
-    do { pos = str.find(delimiter); 
-    
-    if (pos == std::string::npos) {
-        token = str; 
-    } else {
-        token = str.substr(0, pos); 
-    } 
-    if (token[token.size() -1] == '\r') { 
-        token = token.substr(0, token.size() -1); 
-    } 
-    ret.push_back(token); 
-    str.erase(0, pos + delimiter.length()); 
-    } 
-    while (pos != std::string::npos); 
-    return ret; 
 }
