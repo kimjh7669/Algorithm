@@ -38,7 +38,7 @@ string recursion(string p) {    if (p == "")    return p;
     }
 }
  
-string solution(string p) {
+string solution(string p) { // solution - 
     if (check(p))     return p;
     return recursion(p);
 }
