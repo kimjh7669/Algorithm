@@ -30,3 +30,35 @@ def solution(n, edge):
     answer = visited.count(visited[0])
 
     return answer
+
+## second solution
+# def solution(n, edge):
+#     answer = 0
+#     graphs = [[] for _ in range(n+1)]
+#     visited = [-1 for _ in range(n+1)]
+#     visited[1] = 0
+#     queue = []
+    
+#     max_num = 1
+#     for i, j in edge:
+#         graphs[i].append(j)
+#         graphs[j].append(i)
+
+#     for i in graphs[1]:
+#         queue.append(i)
+#         visited[i] = visited[1] + 1
+    
+#     while True:
+#         cur_num = queue.pop(0)
+#         for i in graphs[cur_num]:
+#             if visited[i] == -1:
+#                 queue.append(i)
+#                 visited[i] = visited[cur_num] + 1
+#                 if visited[i] > max_num:
+#                     max_num = visited[i]
+#         if len(queue) == 0:
+#             break    
+#     for i in visited:
+#         if i == max_num:
+#             answer+=1
+#     return answer
